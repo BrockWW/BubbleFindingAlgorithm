@@ -30,6 +30,7 @@ Contained Files
                               run the algorithm. See installation and use notes below.
     - simulation_conversion_code.py: File to convert particle .hdf5 galaxy simulation data files into readable
                                      numpy arrays in correct units for algorithm. (Not required)
+    - test_data: Simulation and observation data included for testing the algorithm. (To be removed)
     - yt_to_column_density_functions.py: File containing the necessary functions in order to do the simulation
                                          to H*cm^-2 array conversion. (Not required)
 
