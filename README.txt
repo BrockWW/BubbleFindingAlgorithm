@@ -57,6 +57,10 @@ through the steps of reading in files to running the algorithm. All of the examp
 as long as the input into the algorithm is a 2D numpy array in units of H*cm^-2, any type of file can be used for
 importing the data.
 
+To run the files, simply use the normal python routine in terminal of typing:
+
+python FILE_NAME.py
+
 **NOTE: The files:
     - example_run_algorithm.py
     - radio_observation_conversion.py
