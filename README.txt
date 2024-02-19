@@ -51,6 +51,10 @@ the terminal move into the location of the imported algorithm code and run the f
 
 pip install -r required_libraries.txt
 
+or
+
+pip install -r required_libraries_noversion.txt
+
 This will install all of the listed libraries and their correct versions to the local python installation. From here,
 it is recommended that the file example_run_algorithm.py be used as a reference when running the algorithm as it goes
 through the steps of reading in files to running the algorithm. All of the examples read in files of the .npy type, but
