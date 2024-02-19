@@ -1,12 +1,12 @@
-'''A'''
+'''Example python file loading in column density galaxy images and running the full algorithm. We
+also include a plotting function at the end to get an output of the found bubbles, the galaxy disk,
+and the exterior region determined from the algorithm.'''
 
 # imports
 from bubble_algorithm_class import *
 from bubble_plotting_functions import *
 import matplotlib.pyplot as plt
 import numpy as np
-
-
 
 ################################################################################################
 # Variables to change based on galaxy images used
@@ -20,8 +20,8 @@ import numpy as np
     - beam_size: beam semimajor and semiminor axis from observation galaxy image (arcsec)
     - obs_gal_dist: physical distance to observation galaxy (kpc)
     - sim_diam_kpc: physical size of simulationgalaxy image if used (kpc)
-    - obs_file: file path of saved observation column density data .npy file (exlude extension)
-    - obs_file: file path of saved simulation column density data .npy file (exlude extension)
+    - obs_file: file path of saved observation column density data
+    - obs_file: file path of saved simulation column density data
     '''
 
 seed = 92947490
@@ -32,14 +32,14 @@ beam_size = np.array([6.04, 6.04])   # arcseconds
 obs_gal_dist = 5.9*1000   # kpc
 sim_diam_kpc = 40   # kpc
 
-obs_file = "/user/example/filename"
-sim_file = "/user/example/filename"
+obs_file = "test_data/atomicH_colden.npy"
+sim_file = "test_data/NGC6946.npy"
 
 ################################################################################################
-# Loading in galaxy images
+# Loading in galaxy images - change loading function depending on file type used
 ################################################################################################
-obs_im = np.load(obs_file + ".npy")   # H*cm^-2
-sim_im = np.load(sim_file + ".npy")   # H*cm^-2
+obs_im = np.load(obs_file)   # H*cm^-2
+sim_im = np.load(sim_file)   # H*cm^-2
 
 ################################################################################################
 # Finding physical size of each real galaxy
@@ -89,6 +89,8 @@ for i in range(len(gal_ims)):
     name = name_list[i]
     gal_use = gal_ims[i]
     gal_diam = diam_list[i]
+
+    print("Name | Volume Percentile | Log10 Column Density Threshold")
     
     # selecting volume percentile to use
     for pe in percentile_arr:
@@ -98,16 +100,20 @@ for i in range(len(gal_ims)):
         bubble_ax, bub_gal_frac = ext_bubble_plotting(galaxy_obj)
         log_thresh = np.log10(galaxy_obj.colden_thresh)
 
+        print(name, "|", pe, "|", np.round(log_thresh, 3))
+
         # properly labeling image
         bubble_ax.set_xlabel("x $(kpc)$")
         bubble_ax.set_ylabel("y $(kpc)$")
         bubble_ax.set_title("{n} Bubble Image\nVolume Percentile {p}".format(n = name, p = pe))
 
         # including bubble covereage fractions and colume density threshold onto plot
-        bubble_ax.annotate("Log10 Threshold:\n{l}".format(l = np.round(log_thresh, 3)), (0.6, 0.88), xycoords = "axes fraction", **{"color": "white", "fontsize": "small"})
-        bubble_ax.annotate("Bubble-Galaxy\nPixel Ratio:\n{r}".format(r = bub_gal_frac), (0.1, 0.83), xycoords = "axes fraction", **{"color": "white", "fontsize": "small"})
+        bubble_ax.annotate("Log10 Threshold:\n{l}".format(l = np.round(log_thresh, 3)), (0.6, 0.88), 
+                           xycoords = "axes fraction", **{"color": "white", "fontsize": "small"})
+        bubble_ax.annotate("Bubble-Galaxy\nPixel Ratio:\n{r}".format(r = bub_gal_frac), (0.1, 0.83), 
+                           xycoords = "axes fraction", **{"color": "white", "fontsize": "small"})
 
         # saving and closing image
-        plt.savefig("TEST_IMS/{n}_{p}.png".format(n = name, p = pe), bbox_inches = "tight")
+        plt.savefig("test_ims/{n}_{p}.png".format(n = name, p = pe), bbox_inches = "tight")
         plt.clf()
         plt.close()
