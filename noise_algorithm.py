@@ -54,10 +54,11 @@ def find_noise(obs_fft, seed = 123456789):
     observation image.
     
     Variables:
-        - obs_fft: 
+        - obs_fft: real or imaginary fft of the observation image
+        - seed: random seed to keep output the same between different instances
         
     Output:
-        - 
+        - noise_gauss: created 2D noise gaussian using noise from observation image
         '''
     
     # flatten to 1D array
@@ -80,6 +81,17 @@ def find_noise(obs_fft, seed = 123456789):
     return noise_gauss
 
 def recombine_parts(real_fft, imag_fft):
+    '''Function to combine real and imaginary part of image fft
+    into single array.
+    
+    Variables:
+        - real_fft: real part of image fft
+        - imag_fft: imaginary part of image fft
+        
+    Output:
+        - arr_fft: combined real and imaginary image fft
+        '''
+    
     # finding shape of image
     N = np.shape(real_fft)[0]
     
@@ -93,6 +105,17 @@ def recombine_parts(real_fft, imag_fft):
     return arr_fft
 
 def frequency_condition(arr_fft):
+    '''Function to ensure condition I(w) = I(-w)* holds to ensure
+    inverse fourier trasform will again yield a image with real values.
+    
+    Variables:
+        - arr_fft: combined real and imaginary image fft
+        
+    Output:
+        - arr_fft: combined real and imaginary image fft after noise condition
+                   I(w) = I(-w)* is ensured for each frequency w
+        '''
+    
     # finding shape of image
     N = np.shape(arr_fft)[0]
     
@@ -146,6 +169,19 @@ def frequency_condition(arr_fft):
     return arr_fft
 
 def sim_noise_alg(sim, obs, seed = 123456789):
+    '''Function combining all steps to apply noise to a simulation image.
+        
+    Variables:
+        - sim: image of the simulation that needs to have noise applied
+        - obs: image of the observation whose noise will be used to apply
+               noise to the simulation
+        - seed: random seed to keep output the same between different instances
+            
+    Output:
+        - sim_noise: real simulation image with noise applied
+        - sim_noise_fft: fourier transform of simulation image with noise applied
+        '''
+
     # finding fft arrays
     real_sim, real_obs = take_fft(sim, obs, real = True)
     imag_sim, imag_obs = take_fft(sim, obs, real = False)
@@ -176,10 +212,11 @@ def sim_noise_alg(sim, obs, seed = 123456789):
     return sim_noise, sim_noise_fft
 
 def fix_im(im):
-    '''Correct Image after applying a Smoothing Gaussian.
+    '''Correct image after applying a smoothing gaussian (i.e. reorder the
+    different quandrants to form a galaxy again).
     
     Variables:
-        - im: the input image we are trying to correct
+        - im: the input image to be corrected
         
     Retruns:
         - out_im: the corrected image
