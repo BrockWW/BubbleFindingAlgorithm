@@ -28,9 +28,13 @@ Contained Files
     - README.txt: This file.
     - required_libraries.txt: File containing the necessary python libraries and their working versions to
                               run the algorithm. See installation and use notes below.
+    - required_libraries_noversion.txt: File containing the necessary python libraries without versions to
+                                        run the algorithm. See installation and use notes below.
     - simulation_conversion_code.py: File to convert particle .hdf5 galaxy simulation data files into readable
                                      numpy arrays in correct units for algorithm. (Not required)
-    - test_data: Simulation and observation data included for testing the algorithm. (To be removed)
+    - test_data: Simulation and observation data included for testing the algorithm.
+    - test_ims: Directory to store output images created from running example_run_algorithm.py using the files
+                provided in test_data.
     - yt_to_column_density_functions.py: File containing the necessary functions in order to do the simulation
                                          to H*cm^-2 array conversion. (Not required)
 
@@ -44,10 +48,13 @@ To import this algorithm, clone the github repository using:
 git clone https://github.com/BrockWW/BubbleFindingAlgorithm.git
 
 This algorithm has been developed and tested using Python 3.6.4, all the required libraries and versions needed 
-are described in required_libraries.txt. Please ensure that the local python installation being used is allowed 
-to overwrite currently installed libraries. It is recommended to create a virtual environment if it is not feasable 
-to install this package with the local main python installation. In order to install all of these libraries, using 
-the terminal move into the location of the imported algorithm code and run the following command:
+are described in required_libraries.txt. If using a more recent version of python, please use the 
+required_libraries_noversion.txt to correctly install all necessary python libraries. Note that thi algorithm was
+tested with Python 3.6.4 and has not been checked in detail with every newer version, so errors may occur. Please 
+ensure that the local python installation being used is allowed to overwrite currently installed libraries. It is 
+recommended to create a virtual environment if it is not feasable to install this package with the local main 
+python installation. In order to install all of these libraries, using the terminal move into the location of the 
+imported algorithm code and run the following command:
 
 pip install -r required_libraries.txt
 
