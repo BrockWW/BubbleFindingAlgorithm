@@ -173,7 +173,7 @@ class Bubble_Alg():
         '''
 
         # initializing bubble diameter array
-        radius_arr = np.zeros_like(self.bubble_arr)
+        radius_arr = np.zeros_like(self.bubble_arr, dtype = np.float64)
 
         # looping through all bubbles selected from ext_find_bubbles
         for i in range(len(self.bubble_arr)):
