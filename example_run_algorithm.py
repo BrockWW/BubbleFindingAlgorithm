@@ -32,8 +32,8 @@ beam_size = np.array([6.04, 6.04])   # arcseconds
 obs_gal_dist = 5.9*1000   # kpc
 sim_diam_kpc = 40   # kpc
 
-obs_file = "test_data/atomicH_colden.npy"
-sim_file = "test_data/NGC6946.npy"
+obs_file = "test_data/NGC6946.npy"
+sim_file = "test_data/atomicH_colden.npy"
 
 ################################################################################################
 # Loading in galaxy images - change loading function depending on file type used
