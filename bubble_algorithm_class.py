@@ -18,20 +18,16 @@ class Bubble_Alg():
         to increase ease of use and speed of analysis.
         
         Variables:
-            - im: (2D array) galaxy column density image to be analyzed, needs to be square (H*cm^-2)
-            - im_size: (float) physical size of one side of input image (kpc)
+            - im: (2D array) galaxy column density image to be analyzed (H*cm^-2)
+            - im_size: (float) physical size of longest side of input image (kpc)
             - percentile: (integer) volume percentile used to find the bubbles in galactic disk
             - beam_size: (float) major axis of beam used to smooth image (or used in retrieving 
                          observation image) (arcsec)
             - pixel_size: (float) angular size of each pixel (arcsec/pixel_length)
             '''
         
-        # checking if image is square
-        if(im.shape[0] != im.shape[1]):
-            return "Image must be square with same pixel count on each side."
-        
         # defining self variables fo use in following methods
-        self.im = im
+        self.in_im = im
         self.im_size = im_size
         self.pixel_area = (im_size/im.shape[0])**2
         self.perc = percentile
@@ -39,9 +35,48 @@ class Bubble_Alg():
         self.pixel_size = pixel_size
         
         # running methods to find bubbles
+        self.make_square()
         self.remove_exterior()
         self.ext_bubble_algorithm()
         self.ext_find_bubbles()
+    
+    def make_square(self):
+        '''Function that takes a non-square image and makes it square along
+        its longest side.
+        
+        Variables:
+            - self:calling self variables for function
+
+        Returns:
+            - self.im: square input image using minimum of original input image as 
+                       the additional pixel values
+            '''
+
+        # checking if input image is already square
+        if(self.in_im.shape[0] == self.in_im.shape[1]):
+            self.im = self.in_im
+
+        # making input image square if not already
+        elif(self.in_im.shape[0] != self.in_im.shape[1]):
+            # finding maximum and minimum side lengths
+            pixel_max = np.max(self.in_im.shape)
+            pixel_min = np.min(self.in_im.shape)
+            pixel_diff = pixel_max-pixel_min
+
+            # creating fill array with values the minimum of the input image
+            if(pixel_diff%2 == 0):
+                fill_arr1 = np.ones(shape=(pixel_max, int(pixel_diff/2)))*np.min(self.in_im)
+                fill_arr2 = fill_arr1
+            elif(pixel_diff%2 == 1):
+                fill_arr1 = np.ones(shape=(pixel_max, int(pixel_diff//2)))*np.min(self.in_im)
+                fill_arr2 = np.ones(shape=(pixel_max, int((pixel_diff//2)+1)))*np.min(self.in_im)
+
+            # adding fill array to smallest axis centered around center of large axis
+            if(self.in_im.shape[0] > self.in_im.shape[1]):
+                self.im = np.concatenate([fill_arr1, self.in_im, fill_arr2], axis = 1)
+            elif(self.in_im.shape[0] < self.in_im.shape[1]):
+                self.im = np.concatenate([fill_arr1.T, self.in_im, fill_arr2.T], axis = 0)
+
         
     def remove_exterior(self):
         '''Function that smooths imput image to find exterior region for removal.
