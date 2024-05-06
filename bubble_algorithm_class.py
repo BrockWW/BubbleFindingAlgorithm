@@ -97,7 +97,7 @@ class Bubble_Alg():
         s = np.sqrt(v)/2
 
         # using scipy to smooth image into exterior and galaxy regions only
-        filt_im = ndimage.uniform_filter(self.im, size = s)
+        filt_im = ndimage.uniform_filter(self.im, size = s, mode = "nearest")
         thresh_im = filt_im < np.average(filt_im)
 
         # labeling image components and returning image of exterior removed galaxy
