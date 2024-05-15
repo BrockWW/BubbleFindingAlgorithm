@@ -49,8 +49,8 @@ git clone https://github.com/BrockWW/BubbleFindingAlgorithm.git
 
 This algorithm has been developed and tested using Python 3.6.4, all the required libraries and versions needed 
 are described in required_libraries.txt. If using a more recent version of python, please use the 
-required_libraries_noversion.txt to correctly install all necessary python libraries. Note that thi algorithm was
-tested with Python 3.6.4 and has not been checked in detail with every newer version, so errors may occur. Please 
+required_libraries_noversion.txt to correctly install all necessary python libraries. The algorithm has been tested 
+with Python 3.12 using the most up to date libraries and gives results as was seen with Python 3.6.4. Please 
 ensure that the local python installation being used is allowed to overwrite currently installed libraries. It is 
 recommended to create a virtual environment if it is not feasable to install this package with the local main 
 python installation. In order to install all of these libraries, using the terminal move into the location of the 
@@ -78,8 +78,3 @@ python FILE_NAME.py
     - simulation_conversion_code.py
 all require some user manipulation to run properly. Most of this included specifying the path of locally installed files.
 If no change is made to match the user's file locations and save directories, these will not run and the algorithm will fail.
-
-
-
-
-
