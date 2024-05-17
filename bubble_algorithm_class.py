@@ -23,7 +23,8 @@ class Bubble_Alg():
             - percentile: (integer) volume percentile used to find the bubbles in galactic disk
             - beam_size: (float) major axis of beam used to smooth image (or used in retrieving 
                          observation image) (arcsec)
-            - pixel_size: (float) angular size of each pixel (arcsec/pixel_length)
+            - pixel_size: (float) angular size of each pixel on longest side of input image
+                          (arcsec/pixel_length)
             '''
         
         # defining self variables fo use in following methods
@@ -63,12 +64,7 @@ class Bubble_Alg():
             pixel_min = np.min(self.in_im.shape)
             pixel_diff = pixel_max-pixel_min
 
-            from skimage.transform import resize
-
-            self.im = resize(self.in_im, (pixel_max, pixel_max))
-
-            # DELETE IF ABOVE CODE WORKS INSTEAD
-            '''# creating fill array with values the minimum of the input image
+            # creating fill array with values the minimum of the input image
             if(pixel_diff%2 == 0):
                 fill_arr1 = np.ones(shape=(pixel_max, int(pixel_diff/2)))*np.min(self.in_im)
                 fill_arr2 = fill_arr1
@@ -80,7 +76,7 @@ class Bubble_Alg():
             if(self.in_im.shape[0] > self.in_im.shape[1]):
                 self.im = np.concatenate([fill_arr1, self.in_im, fill_arr2], axis = 1)
             elif(self.in_im.shape[0] < self.in_im.shape[1]):
-                self.im = np.concatenate([fill_arr1.T, self.in_im, fill_arr2.T], axis = 0)'''
+                self.im = np.concatenate([fill_arr1.T, self.in_im, fill_arr2.T], axis = 0)
 
         
     def remove_exterior(self):
@@ -92,7 +88,7 @@ class Bubble_Alg():
         Returns:
             - self.ext_im: input image with all exterior values set to np.nan
             '''
-        
+            
         # selecting size parameter for uniform_filter based on image data
         l = self.im.shape[0]
         weight_im = self.im*((self.im_size*1000*3.086e18/l)**2)*(1.67e-27)   # H/cm^2 -> kg
@@ -103,7 +99,9 @@ class Bubble_Alg():
 
         # using scipy to smooth image into exterior and galaxy regions only
         filt_im = ndimage.uniform_filter(self.im, size = s, mode = "nearest")
-        thresh_im = filt_im < np.average(filt_im)
+        thresh_im = filt_im < 0.25*np.max(filt_im)
+        # REMOVE LINE BELOW IF CODE WORKS
+        #thresh_im = filt_im < np.average(filt_im)
 
         # labeling image components and returning image of exterior removed galaxy
         labeled_im = label(thresh_im)
@@ -177,8 +175,8 @@ class Bubble_Alg():
             for j in range(y_size):
                 # select exterior
                 if binary_im[i,j] == 0:
-                    # get slice of all adjacent pixels
-                    slice = binary_im[i-1:i+1,j-1:j+1]
+                    # get slice of all +-2 adjacent pixels
+                    slice = binary_im[i-2:i+2,j-2:j+2]
                     # check if any in galaxy
                     if np.any(slice == 1):
                         # update borders array
