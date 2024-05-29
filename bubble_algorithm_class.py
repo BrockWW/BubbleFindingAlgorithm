@@ -13,7 +13,7 @@ from scipy import ndimage
 from skimage.measure import label, regionprops
 
 class Bubble_Alg():
-    def __init__(self, im, im_size, percentile, beam_size = 1, pixel_size = 1):
+    def __init__(self, im, im_size, percentile, beam_size = 1, pixel_size = 1, ext_thresh = 0.25):
         '''Class to combine all bubble algorithm functions and output into one coherent object
         to increase ease of use and speed of analysis.
         
@@ -25,6 +25,8 @@ class Bubble_Alg():
                          observation image) (arcsec)
             - pixel_size: (float) angular size of each pixel on longest side of input image
                           (arcsec/pixel_length)
+            - ext_thresh: (float) decimal percentage of maximum image pixel value used to select
+                          and cut out the exterior of the input image (unitless)
             '''
         
         # defining self variables fo use in following methods
@@ -34,6 +36,7 @@ class Bubble_Alg():
         self.perc = percentile
         self.beam_size = beam_size
         self.pixel_size = pixel_size
+        self.ext_thresh = ext_thresh
         
         # running methods to find bubbles
         self.make_square()
@@ -99,7 +102,7 @@ class Bubble_Alg():
 
         # using scipy to smooth image into exterior and galaxy regions only
         filt_im = ndimage.uniform_filter(self.im, size = s, mode = "nearest")
-        thresh_im = filt_im < 0.2*np.max(filt_im)
+        thresh_im = filt_im < self.ext_thresh*np.max(filt_im)
 
         # labeling image components and returning image of exterior removed galaxy
         labeled_im = label(thresh_im)
