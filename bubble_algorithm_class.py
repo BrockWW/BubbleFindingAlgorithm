@@ -209,20 +209,25 @@ class Bubble_Alg():
 
         Returns:
             - self.radius_arr: array of calculated found bubble approximate radii (kpc)
+            - self.area_arr: array of calculated found bubble area (kpc^2)
         '''
 
         # initializing bubble diameter array
         radius_arr = np.zeros_like(self.bubble_arr, dtype = np.float64)
+        area_arr = np.zeros_like(self.bubble_arr, dtype = np.float64)
 
         # looping through all bubbles selected from ext_find_bubbles
         for i in range(len(self.bubble_arr)):
             # correcting for label-index difference
             index = self.bubble_arr[i] - 1
+            # calculating bubble area first
+            area_arr[i] = self.info_dict[index]["area"]*self.pixel_area
             # calculating bubble approximate radius
-            radius_arr[i] = np.sqrt(self.info_dict[index]["area"]*self.pixel_area/np.pi)
+            radius_arr[i] = np.sqrt(area_arr[i]/np.pi)
 
-        # saving radius of bubble to class parameters
+        # saving radius and area of bubble to class parameters
         self.radius_arr = radius_arr
+        self.area_arr = area_arr
         
     def ext_bubble_galactic_radius(self, center):
         '''Algorithm for calculating bubble galactic radius.
