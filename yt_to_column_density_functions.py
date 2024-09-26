@@ -122,10 +122,6 @@ def calculate_atomicH(density_file, temp_file, arr_dims = [1024, 1024, 1024], dt
     print("den shape", density_use.shape)
     print("temp shape", temp_use.shape)
 
-    # checked this, correctly reshapes data
-    #density_use = density_use.reshape(arr_dims[0], arr_dims[1], arr_dims[2])
-    #temp_use = temp_use.reshape(arr_dims[0], arr_dims[1], arr_dims[2])
-
     # applying mass fraction of Hydrogen in galaxy
     XH = 0.71
     density_use *= XH
