@@ -49,7 +49,7 @@ def take_fft(sim, obs, real = True):
     
     return sim_fft, obs_fft
 
-def find_noise(obs_fft, seed = 123456789):
+def find_noise(obs_fft, seed = None):
     '''Function to find the Johnson-Nyquist noise associated with a given 
     observation image.
     
@@ -75,7 +75,8 @@ def find_noise(obs_fft, seed = 123456789):
     std = np.sqrt(x_sum/(len(x_adj)-1))
 
     # calculating noise gaussian centered at 0 with given seed
-    np.random.seed(seed)
+    if(seed != None):
+        np.random.seed(seed)
     noise_gauss = np.random.normal(loc = 0, scale = std, size = (N, N))
 
     return noise_gauss
@@ -168,7 +169,7 @@ def frequency_condition(arr_fft):
     
     return arr_fft
 
-def sim_noise_alg(sim, obs, seed = 123456789):
+def sim_noise_alg(sim, obs, seed = None):
     '''Function combining all steps to apply noise to a simulation image.
         
     Variables:
