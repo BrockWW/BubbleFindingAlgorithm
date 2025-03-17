@@ -20,6 +20,7 @@ import numpy as np
     - beam_size: beam semimajor and semiminor axis from observation galaxy image (arcsec)
     - obs_gal_dist: physical distance to observation galaxy (kpc)
     - sim_diam_kpc: physical size of simulation galaxy image if used (kpc)
+    - ext_thresh: fraction used to determine exterior of image (optional)
     - obs_file: file path of saved observation column density data
     - obs_file: file path of saved simulation column density data
     '''
@@ -31,6 +32,7 @@ pixel_size = 1.5   # arecseconds
 beam_size = np.array([6.04, 6.04])   # arcseconds
 obs_gal_dist = 5.9*1000   # kpc
 sim_diam_kpc = 40   # kpc
+ext_thresh = 0.25
 
 obs_file = "test_data/NGC6946.npy"
 sim_file = "test_data/atomicH_colden.npy"
@@ -71,7 +73,7 @@ else:
     out_sim_im = sim_noise_beam
 
 ################################################################################################
-# Running bubble finding algorithm for both galaxies and the 50-80th volume percentile
+# Running bubble finding algorithm for both galaxies and the 50-80th area percentile
 # and plotting resulting bubbles
 ################################################################################################
 
@@ -90,11 +92,11 @@ for i in range(len(gal_ims)):
     gal_use = gal_ims[i]
     gal_diam = diam_list[i]
 
-    print("Name | Volume Percentile | Log10 Column Density Threshold")
+    print("Name | Area Percentile | Log10 Column Density Threshold")
     
     # selecting volume percentile to use
     for pe in percentile_arr:
-        galaxy_obj = Bubble_Alg(gal_use, gal_diam, pe, beam_size[0], pixel_size)
+        galaxy_obj = Bubble_Alg(gal_use, gal_diam, pe, beam_size[0], pixel_size, ext_thresh)
         
         # running bubble plotting funtion
         bubble_ax, bub_gal_frac = ext_bubble_plotting(galaxy_obj)
@@ -105,7 +107,7 @@ for i in range(len(gal_ims)):
         # properly labeling image
         bubble_ax.set_xlabel("x $(kpc)$")
         bubble_ax.set_ylabel("y $(kpc)$")
-        bubble_ax.set_title("{n} Bubble Image\nVolume Percentile {p}".format(n = name, p = pe))
+        bubble_ax.set_title("{n} Bubble Image\nArea Percentile {p}".format(n = name, p = pe))
 
         # including bubble covereage fractions and colume density threshold onto plot
         bubble_ax.annotate("Log10 Threshold:\n{l}".format(l = np.round(log_thresh, 3)), (0.6, 0.88), 
