@@ -1,6 +1,6 @@
 '''File containing all the required functions to convert an HDF5 particle galaxy simulation into
 column density arrays of atomic and molecular hydrogen. Because of large memory requirements and
-long running time, it is highly recommended that arrays from steps be saved to .npz files so if
+long running time, it is highly recommended that arrays from steps be saved to .npy files so if
 a later step fails, the entire process does not need to be redone.'''
 
 # imports
@@ -88,7 +88,7 @@ def calculate_atomicH(density_file, temp_file, arr_dims = [1024, 1024, 1024], dt
         
     NOTE: Depending on the size of the density and temperature files, this function can use up a lot of memory
     as it creates new arrays before it is able to remove unneeded arrays. For whatever the size of the density
-    or temprature array, this function will need at least 5 times the memory of one of the arrays.
+    or temperature array, this function will need at least 5 times the memory of one of the arrays.
 
     Variables:
         - density_file: path of file storing density array (MSun*pc^-3)
