@@ -19,7 +19,7 @@ import numpy as np
     - pixel_size: angular pixel side length for observation galaxy image (arcsec)
     - beam_size: beam semimajor and semiminor axis from observation galaxy image (arcsec)
     - obs_gal_dist: physical distance to observation galaxy (kpc)
-    - sim_diam_kpc: physical size of simulationgalaxy image if used (kpc)
+    - sim_diam_kpc: physical size of simulation galaxy image if used (kpc)
     - obs_file: file path of saved observation column density data
     - obs_file: file path of saved simulation column density data
     '''
