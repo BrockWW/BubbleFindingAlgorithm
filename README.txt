@@ -62,7 +62,7 @@ or
 
 pip install -r required_libraries_noversion.txt
 
-Run the first "pip install" line if Python 3.6.4 is being used or run the second line if a differnt Python version is used.
+Run the first "pip install" line if Python 3.6.4 is being used or run the second line if a different Python version is used.
 This will install all of the listed libraries and their correct versions to the local python installation. From here,
 it is recommended that the file example_run_algorithm.py be used as a reference when running the algorithm as it goes
 through the steps of reading in files, to running the algorithm and plotting the output. The example data file type used is
