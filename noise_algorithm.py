@@ -99,7 +99,7 @@ def recombine_parts(real_fft, imag_fft):
     # initializing output array
     arr_fft = np.zeros((N, N), complex)
 
-    # recobining real and imaginary parts of fft array
+    # recombining real and imaginary parts of fft array
     arr_fft.real = real_fft
     arr_fft.imag = imag_fft
     
@@ -107,7 +107,7 @@ def recombine_parts(real_fft, imag_fft):
 
 def frequency_condition(arr_fft):
     '''Function to ensure condition I(w) = I(-w)* holds to ensure
-    inverse fourier trasform will again yield a image with real values.
+    inverse fourier transform will again yield a image with real values.
     
     Variables:
         - arr_fft: combined real and imaginary image fft
