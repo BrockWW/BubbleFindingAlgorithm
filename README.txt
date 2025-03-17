@@ -4,7 +4,7 @@ Title and Description
 Superbubble Finding Algorithm
 
 We create an algorithm that is able to automatically detect and measure superbubbles left in
-galactc disks using common python libraries. The algorithm takes an input column density galaxy image
+galactic disks using common python libraries. The algorithm takes an input column density galaxy image
 and returns the labels and basic measurements of the detected bubbles so tasks like plotting
 and further analysis can be done. Functions to solve for the superbubble radii, superbubble galactic 
 radii location, and an external function to plot the detected bubbles are prepackaged in the algorithm.
@@ -14,8 +14,8 @@ radii location, and an external function to plot the detected bubbles are prepac
 Contained Files
 ===============
 
-    - bubble_algorithm_class.py: Contains the main part of the algorithm where a class structiure is used
-                                 to conviniently store and access different values during analysis.
+    - bubble_algorithm_class.py: Contains the main part of the algorithm where a class structure is used
+                                 to conveniently store and access different values during analysis.
     - bubble_plotting_functions.py: Contains a function used to plot the detected superbubbles after running 
                                     the algorithm.
     - example_run_algorithm.py: An example of how this algorithm should be used and what it requires to
