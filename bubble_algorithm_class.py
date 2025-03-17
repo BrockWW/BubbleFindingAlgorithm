@@ -1,8 +1,8 @@
 '''File containing the main class for the bubble finding algorithm. Each object created with the class
 completely runs the bubble finding algorithm with no need to call additional methods. Any methods run
-with the initalization of the object should not be ran again. Additional methods are included to calculate
+with the initialization of the object should not be run again. Additional methods are included to calculate
 different properties of the found bubbles, but all data on the image is stored in self variables so
-additional claculations can be done outside of the class methods.'''
+additional calculations can be done outside of the class methods.'''
 
 # imports
 from astropy.io import fits
@@ -49,7 +49,7 @@ class Bubble_Alg():
         its longest side.
         
         Variables:
-            - self:calling self variables for function
+            - self: calling self variables for function
 
         Returns:
             - self.im: square input image using minimum of original input image as 
@@ -121,8 +121,8 @@ class Bubble_Alg():
             - self: calling self variables for function
 
         Returns:
-            - self.labeled_im: image with all seperated regions labeled uniquely
-            - self.info_dict: dictionary that contains significant amout of data about each 
+            - self.labeled_im: image with all separated regions labeled uniquely
+            - self.info_dict: dictionary that contains significant amount of data about each 
               labeled region (area, label value, centroid, etc.)
             - self.thresh_used: column density threshold (H*cm^-2)
         '''
@@ -143,7 +143,7 @@ class Bubble_Alg():
         self.colden_thresh = colden_thresh
 
     def ext_find_bubbles(self):
-        '''Bubble classifying algoithm that uses the volume percentile threshold method.
+        '''Bubble classifying algorithm that uses the area percentile threshold method.
 
         Variables:
             - self: calling self variables for function
@@ -212,7 +212,7 @@ class Bubble_Alg():
             - self.area_arr: array of calculated found bubble area (kpc^2)
         '''
 
-        # initializing bubble diameter array
+        # initializing bubble radius array
         radius_arr = np.zeros_like(self.bubble_arr, dtype = np.float64)
         area_arr = np.zeros_like(self.bubble_arr, dtype = np.float64)
 
@@ -238,7 +238,7 @@ class Bubble_Alg():
 
         Returns:
             - self.bubble_gal_rad: array of calculated found bubble center distances from 
-                                   galctic center (kpc)
+                                   galactic center (kpc)
         '''
         
         # ensuring input center coordinate is a numpy array for later calculation
