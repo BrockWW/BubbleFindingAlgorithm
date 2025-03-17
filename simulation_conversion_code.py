@@ -1,4 +1,4 @@
-'''File combining all functons in order to convert hdf5 particle simulation
+'''File combining all functions in order to convert hdf5 particle simulation
 to atomic and molecular hydrogen column density arrays. Alter variables in
 first block of code to customize output.'''
 
